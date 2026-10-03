@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "engines": {
-    "node":"22.x",
+    "node": "22.x",
     "npm": "10.x"
   },
   "scripts": {
@@ -11,7 +11,7 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^5.3.8",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",

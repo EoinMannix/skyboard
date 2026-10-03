@@ -1,0 +1,226 @@
+extends layout
+
+block content
+  //-
+    I used the www.pughtml.com site to convert HTML I wrote into Pug.
+    To help learn Bootstrap I searched the MTU library and used a beginners tutorial:
+    Svekis, L. (2018) Bootstrap 4 for Beginners - Build 5 Websites from Scratch. Packt Publishing.
+    Accessed via ProQuest: https://www.proquest.com/docview/2223945055
+
+  .row.banner
+
+    .col-12
+
+      h1
+        i.fa.fa-plane
+        | Dublin Airport
+        small DUB
+      p.lead Live departures and arrivals. 2 flights are delayed and 1 is cancelled.
+
+  .row
+
+    .col-12.col-lg-9
+
+      .card
+      
+        .card-header
+          i.fa.fa-plane
+          | Departures
+
+        table.table
+
+          thead
+            tr
+              th
+              th Flight
+              th To
+              th Time
+              th Gate
+              th Status
+
+          tbody
+            tr
+              td
+                i.fa.fa-star
+              td
+                a(href="/") EI152
+              td London (LHR)
+              td 06:45
+              td 102
+              td
+                span.badge.bg-success On time
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") FR1024
+              td Paris (BVA)
+              td 06:50
+              td 216
+              td
+                span.badge.bg-warning Boarding
+
+            tr
+              td
+                i.fa.fa-star
+              td
+                a(href="/") EI105
+              td New York (JFK)
+              td 07:05
+              td 405
+              td
+                span.badge.bg-warning Check-in
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") FR7132
+              td Barcelona (BCN)
+              td 07:15
+              td 210
+              td
+                span.badge.bg-danger Delayed
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") EK162
+              td Dubai (DXB)
+              td 07:40
+              td 332
+              td
+                span.badge.bg-success On time
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") EI350
+              td Munich (MUC)
+              td 08:10
+              td 305
+              td
+                span.badge.bg-danger Cancelled
+
+      .card
+      
+        .card-header
+          i.fa.fa-plane
+          | Arrivals
+
+        table.table
+
+          thead
+            tr
+              th
+              th Flight
+              th From
+              th Time
+              th Term
+              th Status
+
+          tbody
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") EI153
+              td London (LHR)
+              td 06:40
+              td T2
+              td
+                span.badge.bg-success Landed
+
+            tr
+              td
+                i.fa.fa-star
+              td
+                a(href="/") FR963
+              td Krakow (KRK)
+              td 06:45
+              td T1
+              td
+                span.badge.bg-success On time
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") EI106
+              td New York (JFK)
+              td 07:00
+              td T2
+              td
+                span.badge.bg-success On time
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") LH978
+              td Frankfurt (FRA)
+              td 07:10
+              td T1
+              td
+                span.badge.bg-warning Baggage
+
+            tr
+              td
+                i.fa.fa-star
+              td
+                a(href="/") QR17
+              td Doha (DOH)
+              td 07:15
+              td T2
+              td
+                span.badge.bg-danger Delayed
+
+            tr
+              td
+                i.fa.fa-star-o
+              td
+                a(href="/") FR553
+              td Faro (FAO)
+              td 07:35
+              td T1
+              td
+                span.badge.bg-warning Expected
+
+    .col-12.col-lg-3
+
+      .card
+
+        .card-header
+          i.fa.fa-star
+          | My watchlist
+
+        table.table
+
+          tbody
+            tr
+              td EI152
+              td
+                span.badge.bg-success On time
+
+            tr
+              td EI105
+              td
+                span.badge.bg-warning Check-in
+
+            tr
+              td FR963
+              td
+                span.badge.bg-success On time
+                
+            tr
+              td QR17
+              td
+                span.badge.bg-danger Delayed
+
+        .card-body
+
+          a(href="/login") Login
+          |  to save your own flights.

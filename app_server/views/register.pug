@@ -1,0 +1,56 @@
+extends layout
+
+block content
+
+  .row.banner
+
+    .col-12
+
+      h1
+        i.fa.fa-user-plus
+        | Register
+        small Create your SkyBoard account
+
+  .row
+
+    .col-12.col-lg-6
+
+      .card
+
+        .card-header
+
+          i.fa.fa-user
+          | Your details
+
+        .card-body
+        
+          form(action="/login", method="get")
+            label(for="name") Name
+
+            input#name.form-control(name="name")
+            label(for="email") Email
+
+            input#email.form-control(name="email", type="email")
+            label(for="airport") Home airport
+            
+            select#airport.form-control(name="airport")
+              option DUB
+              option ORK
+              option SNN
+              option LHR
+              option CDG
+
+            label(for="password") Password
+            input#password.form-control(name="password", type="password")
+
+            label(for="confirm") Confirm password
+            input#confirm.form-control(name="confirm", type="password")
+
+            button.btn.btn-primary.float-end Register
+            
+    .col-12.col-lg-3
+      p.lead Register to build a watchlist of the flights you care about.
+      p
+        | Already have an account?
+        | <br />
+        a(href="/login") Login here

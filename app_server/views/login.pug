@@ -1,0 +1,41 @@
+extends layout
+
+block content
+
+  .row.banner
+
+    .col-12
+    
+      h1
+        i.fa.fa-lock
+        | Login
+        small Welcome back to SkyBoard
+
+  .row
+
+    .col-12.col-lg-6
+
+      .card
+
+        .card-header
+          i.fa.fa-user
+          | Your account
+
+        .card-body
+
+          form(action="/", method="get")
+            label(for="email") Email
+
+            input#email.form-control(name="email", type="email")
+            label(for="password") Password
+
+            input#password.form-control(name="password", type="password")
+            button.btn.btn-primary.float-end Login
+            
+    .col-12.col-lg-3
+    
+      p.lead Login to star flights and keep them in your watchlist.
+      p
+        | Don't have an account?
+        | <br />
+        a(href="/register") Register here
