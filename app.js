@@ -1,4 +1,3 @@
-require('./app_server/models/db');
 require('dotenv').config();
 require('./app_server/models/db');
 
