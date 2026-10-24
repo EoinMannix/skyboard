@@ -1,145 +1,121 @@
-const dashboard = function(req, res){
-    res.render('dashboard', { 
+const request = require('request');
+
+const apiOptions = {
+    server : 'http://localhost:3000' 
+};
+
+if (process.env.NODE_ENV === 'production') {
+    apiOptions.server = 'https://myproject-ef1e.onrender.com';
+}
+
+const _renderDashboard = function(req, res, airport){
+    res.render('dashboard',{
         title: 'SkyBoard - Live departures and arrivals',
         pageHeader: {
-            title: 'Dublin Airport',
-            code: 'DUB',
-            strapline: 'Live departures and arrivals. 2 flights are delayed and 1 is canclled.'
-            },
-            departures: [{
-                starred: true,
-                flight: 'EI152',
-                place: 'London (LHR)',
-                time: '06:45',
-                gate: '102',
-                status: 'On Time',
-                colour: 'success'
-            },
-            {
-                starred: false,
-                flight: 'FR1024',
-                place: 'Paris (BVA)',
-                time: '06:50',
-                gate: '216',
-                status: 'Boarding',
-                colour: 'warning'
-            },
-            {
-                starred: true,
-                flight: 'EI105',
-                place: 'New York (JFK)',
-                time: '07:05',
-                gate: '405',
-                status: 'Check-in',
-                colour: 'warning'
-            },
-            {
-                starred: false,
-                flight: 'FR7132',
-                place: 'Barcalona (BCN)',
-                time: '07:15',
-                gate: '210',
-                status: 'Delayed',
-                colour: 'danger'
-            },
-            {
-                starred: false,
-                flight: 'EK162',
-                place: 'Dubai (DXB)',
-                time: '07:40',
-                gate: '332',
-                status: 'On time',
-                colour: 'success'
-            },
-            {
-                starred: false,
-                flight: 'EI350',
-                place: 'Munich (MUC)',
-                time: '08:10',
-                gate: '305',
-                status: 'Cancelled',
-                colour: 'danger'
-            }],
-            
-            arrivals: [
-            {
-                starred: false,
-                flight: 'EI153',
-                place: 'London (LHR)',
-                time: '06:40',
-                terminal: 'T2',
-                status: 'Landed',
-                colour: 'success'
-            },
-            {
-                starred: true,
-                flight: 'FR936',
-                place: 'Krakow (KRK)',
-                time: '06:45',
-                terminal: 'T1',
-                status: 'On time',
-                colour: 'success'
-            },
-            {
-                starred: false,
-                flight: 'EI106',
-                place: 'New York (JFK)',
-                time: '07:00',
-                terminal: 'T2',
-                status: 'On time',
-                colour: 'success'
-            },
-            {
-                starred: false,
-                flight: 'LH978',
-                place: 'Frankfurt (FRA)',
-                time: '07:10',
-                terminal: 'T1',
-                status: 'Baggage',
-                colour: 'warning' 
-            },
-            {
-                starred: true,
-                flight: 'QR17',
-                place: 'Doha (DOH)',
-                time: '07:15',
-                terminal: 'T2',
-                status: 'Delayed',
-                colour: 'danger'
-            },
-            {
-                starred: false,
-                flight: 'FR553',
-                place: 'Faro (FAO)',
-                time: '07:45',
-                terminal: 'T1',
-                status: 'Expected',
-                colour: 'warning'
-            }],
-            
-            watchlist: [{
-                flight: 'EI152',
-                status: 'On time',
-                colour: 'success'
-            },
-            {
-                flight: 'EI105',
-                status: 'Check-in',
-                colour: 'warning'
-            },
-            {
-                flight: 'FR963',
-                status: 'On time',
-                colour: 'success'
-            },
-            {
-                flight: 'QR17',
-                status: 'Delayed',
-                colour: 'danger'
-            }]
-        });
-     };
+            title: airport.airportName,
+            code: airport.airportCode,
+            summary: airport.summary
+        },
+        departures: airport.flights.filter(flight => flight.direction === 'departure'),
+        arrivals: airport.flights.filter(flight => flight.direction === 'arrival'),
+        watchlist: [{
+            flight: 'EI152',
+            status: 'On time',
+            colour: 'success' 
+        },
+        {
+            flight: 'EI105',
+            status: 'Check-in',
+            colour: 'warning'
+        },
+        {
+            flight: 'FR963',
+            status: 'On time',
+            colour: 'success'
+        },
+        {
+            flight: 'QR17',
+            status: 'Delayed',
+            colour: 'danger'
+        }]
+    });
+};
+
+const dashboard = function(req, res) {
+    const path = '/api/airports/6adcbff64fba4e8c9677faf9';
+    const requestOptions = {
+        url: apiOptions.server + path,
+        method : 'GET',
+        json : {},
+        qs : {}
+    };
+    request(requestOptions, (err, response,body) => {
+        let airport = {
+            airportName: '',
+            airportCode: '',
+            summary: '',
+            flights: [] 
+        };
+
+        if (!err && response.statusCode === 200 && Array.isArray(body.flights)) {
+            airport = body;
+        }
+        else {
+            console.log('API error or no flights in body:', body);
+        }
+        _renderDashboard(req, res, airport);
+    });
+};
+
+const airportCreate = function(req, res) {
+    const path = '/api/airports';
+    const requestOptions = {
+        url: apiOptions.server + path,
+        method: 'POST',
+        json: {
+            airportName: req.body.airportName,
+            airportCode: req.body.airportCode,
+            summary: req.body.summary,
+            flight1: req.body.flight1,
+            direction1: req.body.direction1,
+            place1: req.body.place1,
+            time1: req.body.time1,
+            gate1: req.body.gate1,
+            terminal1: req.body.terminal1,
+            status1: req.body.status1,
+            colour1: req.body.colour1,
+            flight2: req.body.flight2,
+            direction2: req.body.direction2,
+            place2: req.body.place2,
+            time2: req.body.time2,
+            gate2: req.body.gate2,
+            terminal2: req.body.terminal2,
+            status2: req.body.status2,
+            colour2: req.body.colour2
+        }
+    };
+
+    request(requestOptions, (err, response, body) => {
+        if (err) {
+            return res.status(500).render('error', {
+                message: 'unable to connect to the API server',
+                error: err
+            });
+        }
+
+        if (response.statusCode === 201) {
+            res.redirect('/');
+        }
+        else {
+            res.status(response.statusCode).render('error', {
+                message: 'Error creating airport',
+                error: body
+            });
+        }
+    });
+};
 
 module.exports = {
-    dashboard
+    dashboard,
+    airportCreate
 };

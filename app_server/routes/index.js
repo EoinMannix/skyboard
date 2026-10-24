@@ -6,6 +6,7 @@ const ctrlAuth = require('../controllers/auth');
 
 /* GET Flights pages*/
 router.get('/', ctrlFlights.dashboard);
+router.post('/airports/new', ctrlFlights.airportCreate);
 
 /* Account pages */
 router.get('/login', ctrlAuth.login);
